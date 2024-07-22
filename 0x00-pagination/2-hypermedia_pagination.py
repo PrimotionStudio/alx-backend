@@ -4,7 +4,7 @@ This module contains the function
 """
 import csv
 import math
-from typing import Tuple, List, Dict, Optional, Union
+from typing import Tuple, List, Dict, Optional, Union, Final
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
@@ -18,7 +18,7 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
 class Server:
     """Server class to paginate a database of popular baby names.
     """
-    DATA_FILE = "Popular_Baby_Names.csv"
+    DATA_FILE: Final = "Popular_Baby_Names.csv"
 
     def __init__(self):
         self.__dataset = None
@@ -28,12 +28,11 @@ class Server:
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
-                reader = csv.reader(f)
-                dataset = [row for row in reader]
+                dataset = [row for row in csv.reader(f)]
             self.__dataset = dataset[1:]
         return self.__dataset
 
-    def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+    def get_page(self, page: int = 1, page_size: int = 10) -> List[List[str]]:
         """
         This function returns the appropriate
         page of the dataset
@@ -45,7 +44,7 @@ class Server:
         return self.__dataset[start:end]
 
     def get_hyper(self, page: int = 1,
-                  page_size: int = 10) -> Dict[str, Union[int, List[List],
+                  page_size: int = 10) -> Dict[str, Union[int, List[List[str]],
                                                           Optional[int]]]:
         """
         This function returns a dictionary
@@ -55,14 +54,14 @@ class Server:
         assert type(page) is int and page > 0
         assert type(page_size) is int and page_size > 0
         print(len(self.__dataset))
-        pages = math.ceil(len(self.__dataset) / page_size)
-        prev_page = page - 1
-        next_page = page + 1
+        pages: int = math.ceil(len(self.__dataset) / page_size)
+        prev_page: Optional[int] = page - 1
+        next_page: Optional[int] = page + 1
         if page <= 1:
             prev_page = None
         if page >= pages:
             next_page = None
-        data = self.get_page(page, page_size)
+        data: List[List[str]] = self.get_page(page, page_size)
         return {
             "page_size": len(data),
             "page": page,
