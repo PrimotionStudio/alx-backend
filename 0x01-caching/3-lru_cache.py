@@ -62,7 +62,7 @@ class LRUCache(BaseCaching):
         # append the key to the beginning to show MRU
         self.order = [key] + self.order
         # print("New Order:", self.order)
-    
+
     def get_lru(self):
         """
         This method returns the LRU

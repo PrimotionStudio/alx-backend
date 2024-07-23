@@ -15,10 +15,10 @@ class LIFOCache(BaseCaching):
         This method initializes the class
         """
         super().__init__()
-    
+
     def put(self, key, item):
         """
-        This method puts an item in the cache
+        This method put an item in the cache
         """
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             first_key = list(self.cache_data.keys())[-1]
@@ -26,7 +26,7 @@ class LIFOCache(BaseCaching):
             print(f"DISCARD: {first_key}")
         if key is not None and item is not None:
             self.cache_data[key] = item
-    
+
     def get(self, key):
         """
         This method gets an item from the cache

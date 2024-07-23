@@ -15,14 +15,14 @@ class BasicCache(BaseCaching):
         This method initializes the class
         """
         super().__init__()
-    
+
     def put(self, key, item):
         """
         This method puts an item in the cache
         """
         if key is not None and item is not None:
             self.cache_data[key] = item
-    
+
     def get(self, key):
         """
         This method gets an item from the cache
