@@ -18,8 +18,8 @@ class LRUCache(BaseCaching):
         """
         This method updates the recency list
         """
-        # -1 index represents the MRU
-        # 0 index represents the LRU
+        # 0 index represents the MRU
+        # BaseCaching.MAX_ITEMS - 1 index represents the LRU
         LRUCache.recency = {str(i): "" for i in range(BaseCaching.MAX_ITEMS)}
         # if key in LRUCache.recency:
         #     LRUCache.recency.remove(key)
