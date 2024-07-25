@@ -16,25 +16,29 @@ class LFUCache(BaseCaching):
         """
         super().__init__()
         # 0 is MRU, -1 is LRU
-        self.order = []
+        self.count = {}
 
     def put(self, key, item):
         """
         This method puts an item in the cache
         """
-        # print("PUT:", key)
         if key is None or item is None:
             return
         if key in self.cache_data.keys():
+            self.count[key] += 1
             self.cache_data[key] = item
-            self.append_order(key)
             return
-        if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-            # Remove the LRU
-            print(f"DISCARD: {self.get_lru()}")
-            popped = self.cache_data.pop(self.get_lru())
+        if key not in self.cache_data.keys() and len(self.cache_data) < BaseCaching.MAX_ITEMS:
+            self.count[key] = 1
+            self.cache_data[key] = item
+            return
+        if key not in self.cache_data.keys() and len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+            # Remove the LFU
+            print(f"DISCARD: {self.get_lfu()}")
+            popped = self.cache_data.pop(self.get_lfu())
+            self.count.pop(self.get_lfu())
             # print("Just POPPED OUT:", popped)
-        self.append_order(key)
+        self.count[key] = 1
         self.cache_data[key] = item
         # print("Cache is of lenght:", len(self.cache_data))
         # print("MAX ITEMS:", BaseCaching.MAX_ITEMS)
@@ -45,26 +49,22 @@ class LFUCache(BaseCaching):
         """
         # print("GET:", key)
         if key is not None and key in self.cache_data.keys():
-            self.append_order(key)
+            self.count[key] += 1
             return self.cache_data[key]
         else:
             return None
 
-    def append_order(self, key):
+    def get_lfu(self):
         """
-        This method appends the key to the order
+        This method returns the LFU
         """
-        if key in self.order:
-            self.order.remove(key)
-        else:
-            if len(self.order) == BaseCaching.MAX_ITEMS:
-                self.order.pop(-1)
-        # append the key to the beginning to show MRU
-        self.order = [key] + self.order
-        # print("New Order:", self.order)
-
-    def get_lru(self):
-        """
-        This method returns the LRU
-        """
-        return self.order[-1]
+        # Initialize variables to track the smallest value and its corresponding key
+        min_key = None
+        min_value = float('inf')
+        # Iterate through the dictionary
+        for key, value in self.count.items():
+            if value < min_value:
+                min_value = value
+                min_key = key
+        
+        return min_key
