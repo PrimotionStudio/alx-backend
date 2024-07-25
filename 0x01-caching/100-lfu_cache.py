@@ -29,12 +29,12 @@ class LFUCache(BaseCaching):
             self.cache_data[key] = item
             return
         if key not in self.cache_data.keys() \
-            and len(self.cache_data) < BaseCaching.MAX_ITEMS:
+                and len(self.cache_data) < BaseCaching.MAX_ITEMS:
             self.count[key] = 1
             self.cache_data[key] = item
             return
         if key not in self.cache_data.keys() \
-            and len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                and len(self.cache_data) >= BaseCaching.MAX_ITEMS:
             # Remove the LFU
             print(f"DISCARD: {self.get_lfu()}")
             popped = self.cache_data.pop(self.get_lfu())
@@ -60,7 +60,6 @@ class LFUCache(BaseCaching):
         """
         This method returns the LFU
         """
-        # Initialize variables to track the smallest value and its corresponding key
         min_key = None
         min_value = float('inf')
         # Iterate through the dictionary
@@ -68,5 +67,4 @@ class LFUCache(BaseCaching):
             if value < min_value:
                 min_value = value
                 min_key = key
-        
         return min_key
