@@ -2,7 +2,7 @@
 """
 This module contains the function
 """
-BaseCaching = __import__('base_cachng').BaseCaching
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class FIFOCache(BaseCaching):
