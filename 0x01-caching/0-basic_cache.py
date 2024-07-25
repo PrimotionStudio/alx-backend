@@ -10,11 +10,6 @@ class BasicCache(BaseCaching):
     This class inherits from BaseCaching and
     uses the methods of the parent class
     """
-    def __init__(self):
-        """
-        This method initializes the class
-        """
-        super().__init__()
 
     def put(self, key, item):
         """
