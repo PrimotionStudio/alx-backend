@@ -28,11 +28,13 @@ class LFUCache(BaseCaching):
             self.count[key] += 1
             self.cache_data[key] = item
             return
-        if key not in self.cache_data.keys() and len(self.cache_data) < BaseCaching.MAX_ITEMS:
+        if key not in self.cache_data.keys() \
+            and len(self.cache_data) < BaseCaching.MAX_ITEMS:
             self.count[key] = 1
             self.cache_data[key] = item
             return
-        if key not in self.cache_data.keys() and len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+        if key not in self.cache_data.keys() \
+            and len(self.cache_data) >= BaseCaching.MAX_ITEMS:
             # Remove the LFU
             print(f"DISCARD: {self.get_lfu()}")
             popped = self.cache_data.pop(self.get_lfu())
