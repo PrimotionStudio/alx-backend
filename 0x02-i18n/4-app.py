@@ -26,7 +26,7 @@ def get_locale():
     get the locale from the user
     """
     locale = request.args.get('locale')
-    if locale and locale in app.config["LANGUAGES"]:
+    if locale in app.config["LANGUAGES"]:
         return locale
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
@@ -36,7 +36,7 @@ def index():
     """
     display the index page
     """
-    return render_template('0-index.html')
+    return render_template('0-index.html', locale=get_locale())
 
 
 if __name__ == "__main__":
