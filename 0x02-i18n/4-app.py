@@ -38,7 +38,7 @@ def index():
     """
     display the index page
     """
-    return render_template('0-index.html', locale=get_locale())
+    return render_template('4-index.html', locale=get_locale())
 
 
 if __name__ == "__main__":
