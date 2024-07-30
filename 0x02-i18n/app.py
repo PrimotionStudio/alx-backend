@@ -95,7 +95,8 @@ def index():
     """
     current_time = datetime.now(pytz.timezone(get_timezone()))
     formatted_time = format_datetime(current_time, locale=get_locale())
-    return render_template('7-index.html', locale=get_locale(),  current_time=formatted_time)
+    return render_template('7-index.html', locale=get_locale(),
+                           current_time=formatted_time)
 
 
 if __name__ == "__main__":
