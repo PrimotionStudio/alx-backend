@@ -31,6 +31,9 @@ users = {
 
 
 def get_user():
+    """
+    get user from session
+    """
     try:
         user_id = int(request.args.get('login_as'))
         return users.get(user_id)
@@ -57,7 +60,10 @@ def get_locale():
     user = getattr(g, "user", None)
     if user and user["locale"] in app.config["LANGUAGES"]:
         return user["locale"]
-    return request.accept_languages.best_match(app.config["LANGUAGES"])
+    loc = request.accept_languages.best_match(app.config["LANGUAGES"])
+    if loc:
+        return loc
+    return app.config["BABEL_DEFAULT_LOCALE"]
 
 
 @app.route("/")
