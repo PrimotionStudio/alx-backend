@@ -60,7 +60,10 @@ def get_locale():
     user = getattr(g, "user", None)
     if user and user["locale"] in app.config["LANGUAGES"]:
         return user["locale"]
-    return request.accept_languages.best_match(app.config["LANGUAGES"])
+    loc = request.accept_languages.best_match(app.config["LANGUAGES"])
+    if loc:
+        return loc
+    return app.config["BABEL_DEFAULT_LOCALE"]
 
 
 @app.route("/")
@@ -68,7 +71,7 @@ def index():
     """
     display the index page
     """
-    return render_template('5-index.html', locale=get_locale())
+    return render_template('6-index.html', locale=get_locale())
 
 
 if __name__ == "__main__":
