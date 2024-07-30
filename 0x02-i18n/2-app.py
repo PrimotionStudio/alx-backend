@@ -7,7 +7,7 @@ from flask_babel import Babel
 
 
 app = Flask(__name__)
-babel = Babel(app)
+babel = Babel(app, local_selector=get_locale)
 
 
 class Config:
